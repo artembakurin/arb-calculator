@@ -1,190 +1,107 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <!-- Favicon -->
-  <link rel="icon" href="/favicon.png" type="image/png">
+<title>Калькулятор букмекерских вилок — расчет прибыли</title>
+<meta name="description" content="Онлайн калькулятор букмекерских вилок (бк вилки). Расчет прибыли и ставок для ставок на спорт.">
+<meta name="keywords" content="букмекерские вилки, бк вилки, калькулятор вилок, ставки на спорт">
 
-  <!-- SEO -->
-  <title>Калькулятор букмекерских вилок — расчет прибыли</title>
-  <meta name="description" content="Онлайн калькулятор букмекерских вилок (бк вилки). Рассчитайте прибыль и оптимальные ставки для ставок на спорт. Бесплатно.">
-  <meta name="keywords" content="букмекерские вилки, бк вилки, калькулятор вилок, ставки на спорт, surebet calculator">
+<style>
+* { box-sizing: border-box; }
 
-  <!-- Адаптивность -->
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+body {
+  font-family: Arial, sans-serif;
+  background:#f2f2f2;
+  padding:20px;
+}
 
-  <style>
-    * { box-sizing: border-box; }
+.wrapper {
+  max-width:800px;
+  background:#fff;
+  margin:auto;
+  padding:20px;
+  border-radius:8px;
+}
 
-    body {
-      font-family: Arial, sans-serif;
-      background:#f2f2f2;
-      padding:20px;
-      line-height:1.5;
-    }
+h1 { margin-bottom:10px; }
 
-    .wrapper {
-      max-width:800px;
-      background:#fff;
-      margin:auto;
-      padding:20px;
-      border-radius:8px;
-    }
+.arb {
+  font-size:26px;
+  font-weight:bold;
+  margin-bottom:10px;
+}
 
-    h1 {
-      margin:0 0 10px;
-      font-size:24px;
-    }
+table {
+  width:100%;
+  border-collapse:collapse;
+  margin-bottom:15px;
+}
 
-    .arb {
-      font-size:28px;
-      font-weight:bold;
-      margin-bottom:10px;
-    }
+th, td {
+  border:1px solid #ddd;
+  padding:8px;
+  text-align:center;
+}
 
-    .sub {
-      font-size:13px;
-      color:#666;
-      margin-bottom:15px;
-    }
+input {
+  width:100%;
+  padding:6px;
+}
 
-    table {
-      width:100%;
-      border-collapse:collapse;
-      table-layout:fixed;
-      margin-bottom:15px;
-    }
+.settings {
+  display:flex;
+  gap:20px;
+  margin-bottom:15px;
+}
 
-    th, td {
-      border:1px solid #ddd;
-      padding:8px;
-      text-align:center;
-    }
-
-    th {
-      background:#fafafa;
-      font-size:13px;
-    }
-
-    input {
-      width:100%;
-      padding:6px;
-      font-size:14px;
-    }
-
-    .settings {
-      display:flex;
-      gap:20px;
-      flex-wrap:wrap;
-      margin-bottom:20px;
-    }
-
-    .settings label {
-      font-size:14px;
-    }
-
-    .settings input {
-      width:120px;
-      margin-left:6px;
-    }
-
-    .seo {
-      margin-top:30px;
-    }
-
-    .seo h2 {
-      font-size:18px;
-      margin-top:20px;
-    }
-
-    .seo p {
-      font-size:14px;
-      color:#333;
-    }
-
-    .tg-btn {
-      display:block;
-      margin:30px auto 10px;
-      padding:14px 20px;
-      background:#0088cc;
-      color:#fff;
-      text-align:center;
-      text-decoration:none;
-      font-size:16px;
-      border-radius:6px;
-      max-width:420px;
-    }
-  </style>
+.settings input {
+  width:120px;
+}
+</style>
 </head>
 
 <body>
 
 <div class="wrapper">
 
-  <h1>Онлайн калькулятор букмекерских вилок</h1>
+<h1>Онлайн калькулятор букмекерских вилок</h1>
 
-  <div class="arb" id="arbPercent">0.00%</div>
-  <div class="sub">Число исходов: <b>2</b> · Тип: <b>1 – 2</b></div>
+<div class="arb" id="arbPercent">0.00%</div>
 
-  <table>
-    <thead>
-      <tr>
-        <th style="width:40px">#</th>
-        <th>Коэффициент</th>
-        <th>Ставка</th>
-        <th>Доход</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>1</td>
-        <td><input id="k1" type="number" step="0.01" value="2"></td>
-        <td><input id="s1" type="number" step="0.01"></td>
-        <td id="p1">0.00</td>
-      </tr>
-      <tr>
-        <td>2</td>
-        <td><input id="k2" type="number" step="0.01" value="2"></td>
-        <td><input id="s2" type="number" step="0.01"></td>
-        <td id="p2">0.00</td>
-      </tr>
-    </tbody>
-  </table>
+<table>
+<thead>
+<tr>
+  <th>#</th>
+  <th>Коэффициент</th>
+  <th>Ставка</th>
+  <th>Прибыль</th>
+</tr>
+</thead>
 
-  <div class="settings">
-    <label>
-      Общая сумма:
-      <input id="total" type="number" value="100">
-    </label>
+<tbody>
+<tr>
+  <td>1</td>
+  <td><input id="k1" type="number" step="0.01" value="2"></td>
+  <td><input id="s1" type="number" step="0.01"></td>
+  <td id="p1">0.00</td>
+</tr>
+<tr>
+  <td>2</td>
+  <td><input id="k2" type="number" step="0.01" value="2"></td>
+  <td><input id="s2" type="number" step="0.01"></td>
+  <td id="p2">0.00</td>
+</tr>
+</tbody>
+</table>
 
-    <label>
-      Округлять до:
-      <input id="round" type="number" value="1">
-    </label>
-  </div>
-
-  <!-- SEO текст -->
-  <div class="seo">
-    <h2>Что такое букмекерские вилки</h2>
-    <p>
-      Букмекерские вилки (бк вилки) — это стратегия ставок на спорт, при которой игрок делает ставки на все возможные исходы события у разных букмекерских контор и получает гарантированную прибыль независимо от результата.
-    </p>
-
-    <h2>Онлайн калькулятор вилок</h2>
-    <p>
-      Онлайн калькулятор букмекерских вилок помогает автоматически рассчитать оптимальные суммы ставок, доход и процент прибыли. Подходит для ставок на спорт с двумя исходами.
-    </p>
-
-    <h2>Как пользоваться калькулятором бк вилок</h2>
-    <p>
-      Введите коэффициенты, укажите общую сумму или задайте ставки вручную. Калькулятор мгновенно пересчитает доход и процент вилки.
-    </p>
-  </div>
-
-  <a class="tg-btn" href="https://t.me/+BYeTMejyvuI4MTZi" target="_blank">
-    🔥 Реальные букмекерские вилки и связки — перейти в Telegram
-  </a>
+<div class="settings">
+<label>
+Общая сумма:
+<input id="total" type="number" value="100">
+</label>
+</div>
 
 </div>
 
@@ -196,47 +113,49 @@ const s2 = document.getElementById("s2");
 const p1 = document.getElementById("p1");
 const p2 = document.getElementById("p2");
 const total = document.getElementById("total");
-const round = document.getElementById("round");
 const arbPercent = document.getElementById("arbPercent");
 
-function recalc(autoFromTotal = true) {
+function recalc(fromManual = false) {
   const K1 = parseFloat(k1.value) || 0;
   const K2 = parseFloat(k2.value) || 0;
-  const T = parseFloat(total.value) || 0;
-  const R = parseInt(round.value) || 0;
+  const T  = parseFloat(total.value) || 0;
 
   if (K1 <= 1 || K2 <= 1) return;
 
+  // процент вилки
   const inv = (1 / K1) + (1 / K2);
   const arb = (1 - inv) * 100;
   arbPercent.textContent = arb.toFixed(2) + "%";
 
-  if (autoFromTotal && T > 0) {
-    const S1 = T * (1 / K1) / inv;
-    const S2 = T * (1 / K2) / inv;
-    s1.value = S1.toFixed(R);
-    s2.value = S2.toFixed(R);
+  // если меняли ОБЩУЮ сумму — пересчитываем ставки
+  if (!fromManual && T > 0) {
+    s1.value = (T * (1 / K1) / inv).toFixed(2);
+    s2.value = (T * (1 / K2) / inv).toFixed(2);
   }
 
-  const S1v = parseFloat(s1.value) || 0;
-  const S2v = parseFloat(s2.value) || 0;
+  const S1 = parseFloat(s1.value) || 0;
+  const S2 = parseFloat(s2.value) || 0;
 
-  const income1 = S1v * K1;
-  const income2 = S2v * K2;
+  const income1 = S1 * K1;
+  const income2 = S2 * K2;
 
-  p1.textContent = income1.toFixed(2);
-  p2.textContent = income2.toFixed(2);
+  const profit = Math.min(income1, income2) - (S1 + S2);
+
+  p1.textContent = profit.toFixed(2);
+  p2.textContent = profit.toFixed(2);
 }
 
-[k1, k2, total, round].forEach(el =>
-  el.addEventListener("input", () => recalc(true))
-);
-
-[s1, s2].forEach(el =>
+// авто
+[k1, k2, total].forEach(el =>
   el.addEventListener("input", () => recalc(false))
 );
 
-recalc(true);
+// ручной ввод ставок
+[s1, s2].forEach(el =>
+  el.addEventListener("input", () => recalc(true))
+);
+
+recalc(false);
 </script>
 
 </body>
