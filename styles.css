@@ -204,3 +204,57 @@ body{
   display:block;
   object-fit:cover;
 }
+/* Mobile fixes: show R/F labels near checkboxes */
+@media (max-width: 520px) {
+  /* make header grid fit and avoid hiding columns */
+  .thead{
+    display:none; /* mobile uses per-cell labels (mLabel) */
+  }
+
+  /* each row as grid that doesn't collapse R/F cells */
+  .row{
+    display:grid;
+    grid-template-columns: 1fr 1fr 56px 56px;
+    gap:10px;
+    align-items:stretch;
+  }
+
+  /* profit cell full width under first line */
+  .row .cell:last-child{
+    grid-column: 1 / -1;
+  }
+
+  /* show labels always */
+  .mLabel{
+    display:block !important;
+    font-size:12px;
+    line-height:1.1;
+    opacity:.85;
+    margin-bottom:6px;
+    white-space:nowrap;
+  }
+
+  /* specifically R/F cells */
+  .cell.center{
+    display:flex;
+    flex-direction:column;
+    justify-content:flex-start;
+    align-items:center;
+    padding-top:2px;
+  }
+
+  .cell.center .mLabel{
+    display:block !important;
+    text-align:center;
+    margin:0 0 6px 0;
+    opacity:1;
+    font-weight:750;
+    letter-spacing:.02em;
+  }
+
+  /* make checkboxes a bit larger for touch */
+  input[type="checkbox"]{
+    width:20px;
+    height:20px;
+  }
+}
