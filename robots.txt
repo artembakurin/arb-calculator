@@ -1,3 +1,4 @@
 User-agent: *
 Allow: /
 Sitemap: https://calc-vilok.ru/sitemap.xml
+Host: calc-vilok.ru

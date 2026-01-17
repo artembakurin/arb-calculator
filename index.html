@@ -3,850 +3,142 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Онлайн-калькулятор вилок</title>
-  <style>
-    :root{
-      --bg:#0b1220;
-      --panel:#0f1a2e;
-      --panel2:#0c1527;
-      --text:#e7eefc;
-      --muted:#9fb2d6;
-      --line:rgba(255,255,255,.10);
-      --accent:#56a3ff;
-      --accent2:#30d6a4;
-      --danger:#ff4d6d;
-      --shadow:0 10px 30px rgba(0,0,0,.35);
-      --r:14px;
-    }
-    *{box-sizing:border-box}
-    body{
-      margin:0;
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans", "Helvetica Neue", sans-serif;
-      background: radial-gradient(1200px 700px at 20% -10%, rgba(86,163,255,.25), transparent 55%),
-                  radial-gradient(1000px 700px at 100% 0%, rgba(48,214,164,.18), transparent 55%),
-                  var(--bg);
-      color:var(--text);
-    }
-    .wrap{
-      max-width:1100px;
-      margin:0 auto;
-      padding:28px 16px 64px;
-    }
-    h1{
-      margin:0 0 14px;
-      font-size:28px;
-      letter-spacing:.2px;
-    }
-    .sub{
-      color:var(--muted);
-      font-size:14px;
-      margin:0 0 22px;
-      line-height:1.35;
-    }
 
-    .grid{
-      display:grid;
-      grid-template-columns: 1fr;
-      gap:14px;
-    }
+  <title>Калькулятор вилок онлайн - расчет ставок и ROI</title>
+  <meta name="description" content="Калькулятор вилок: расчет ставок по коэффициентам, распределение прибыли, ROI и сумма ставок. Быстро, удобно, без регистрации." />
+  <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1" />
+  <link rel="canonical" href="https://calc-vilok.ru/" />
+  <link rel="icon" href="/favicon.png" type="image/png">
+  <meta name="theme-color" content="#0b1220" />
 
-    .card{
-      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
-      border:1px solid var(--line);
-      border-radius: var(--r);
-      box-shadow: var(--shadow);
-      overflow:hidden;
-    }
-    .card-h{
-      padding:14px 14px;
-      background: linear-gradient(180deg, rgba(0,0,0,.12), transparent);
-      border-bottom:1px solid var(--line);
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:12px;
-      flex-wrap:wrap;
-    }
-    .card-h .title{
-      font-weight:700;
-      font-size:14px;
-      letter-spacing:.2px;
-      color:var(--text);
-    }
-    .card-b{
-      padding:14px;
-    }
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="calc-vilok.ru" />
+  <meta property="og:title" content="Калькулятор вилок онлайн - расчет ставок и ROI" />
+  <meta property="og:description" content="Рассчитывай ставки по коэффициентам, распределяй прибыль и смотри ROI." />
+  <meta property="og:url" content="https://calc-vilok.ru/" />
+  <!-- Если добавишь og-image, раскомментируй -->
+  <!-- <meta property="og:image" content="https://calc-vilok.ru/og.png" /> -->
 
-    .row{
-      display:flex;
-      gap:12px;
-      flex-wrap:wrap;
-      align-items:flex-end;
-    }
-    .field{
-      min-width: 190px;
-      flex: 1 1 220px;
-    }
-    label{
-      display:block;
-      color:var(--muted);
-      font-size:12px;
-      margin:0 0 6px;
-    }
-    input[type="number"], input[type="text"], select{
-      width:100%;
-      padding:10px 12px;
-      border-radius:12px;
-      border:1px solid var(--line);
-      background: rgba(8,14,26,.55);
-      color:var(--text);
-      outline:none;
-    }
-    input[type="number"]:focus, input[type="text"]:focus, select:focus{
-      border-color: rgba(86,163,255,.55);
-      box-shadow: 0 0 0 3px rgba(86,163,255,.15);
-    }
-    .hint{
-      margin-top:6px;
-      font-size:12px;
-      color:var(--muted);
-    }
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Калькулятор вилок онлайн - расчет ставок и ROI" />
+  <meta name="twitter:description" content="Рассчитывай ставки по коэффициентам, распределяй прибыль и смотри ROI." />
+  <!-- <meta name="twitter:image" content="https://calc-vilok.ru/og.png" /> -->
 
-    .seg{
-      display:flex;
-      gap:8px;
-      flex-wrap:wrap;
-      align-items:center;
-    }
-    .seg button{
-      padding:9px 12px;
-      border-radius:999px;
-      border:1px solid var(--line);
-      background: rgba(8,14,26,.55);
-      color:var(--text);
-      cursor:pointer;
-      font-weight:650;
-      font-size:13px;
-      transition:.15s;
-    }
-    .seg button.active{
-      border-color: rgba(86,163,255,.65);
-      box-shadow: 0 0 0 3px rgba(86,163,255,.15);
-      background: rgba(86,163,255,.10);
-    }
+  <!-- Favicons (по желанию добавишь реальные файлы) -->
+  <link rel="icon" href="/favicon.ico" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 
-    .switches{
-      display:flex;
-      gap:14px;
-      flex-wrap:wrap;
-      align-items:center;
-      justify-content:flex-start;
-    }
-    .sw{
-      display:flex;
-      gap:10px;
-      align-items:center;
-      color:var(--text);
-      font-size:13px;
-      user-select:none;
-    }
-    .sw input{
-      width:18px;height:18px;
-      accent-color: var(--accent);
-    }
+  <link rel="stylesheet" href="styles.css" />
 
-    table{
-      width:100%;
-      border-collapse:separate;
-      border-spacing:0;
-      overflow:hidden;
-      border:1px solid var(--line);
-      border-radius: 14px;
-      background: rgba(8,14,26,.40);
-    }
-    thead th{
-      text-align:left;
-      font-size:12px;
-      color:var(--muted);
-      padding:10px 10px;
-      border-bottom:1px solid var(--line);
-      background: rgba(255,255,255,.03);
-      white-space:nowrap;
-    }
-    tbody td{
-      padding:10px 10px;
-      border-bottom:1px solid var(--line);
-      vertical-align:top;
-    }
-    tbody tr:last-child td{border-bottom:none}
-    .cell{
-      min-width:110px;
-    }
-    .cell.small{min-width:72px}
-    .cell.tiny{min-width:56px}
-    .cell input, .cell select{
-      padding:9px 10px;
-      border-radius:12px;
-      width:100%;
-    }
-
-    .mini{
-      display:flex;
-      gap:10px;
-      align-items:center;
-      justify-content:flex-end;
-      white-space:nowrap;
-    }
-    .tag{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      padding:8px 10px;
-      border:1px solid var(--line);
-      border-radius:999px;
-      font-size:12px;
-      color:var(--muted);
-      background: rgba(8,14,26,.45);
-    }
-    .tag strong{color:var(--text)}
-    .profit{
-      font-weight:800;
-      color: var(--accent2);
-    }
-    .loss{
-      font-weight:800;
-      color: var(--danger);
-    }
-
-    .foot{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      align-items:center;
-      justify-content:space-between;
-      margin-top:12px;
-    }
-    .btn{
-      padding:10px 12px;
-      border-radius:12px;
-      border:1px solid var(--line);
-      background: rgba(86,163,255,.12);
-      color:var(--text);
-      font-weight:750;
-      cursor:pointer;
-      transition:.15s;
-    }
-    .btn:hover{transform: translateY(-1px)}
-    .btn.ghost{
-      background: rgba(8,14,26,.45);
-    }
-
-    .warn{
-      margin-top:10px;
-      color: rgba(255,255,255,.75);
-      font-size:12px;
-      line-height:1.35;
-    }
-    .warn b{color:#fff}
-
-    @media (max-width: 820px){
-      thead{display:none}
-      table, tbody, tr, td{display:block; width:100%}
-      tbody td{border-bottom:none; padding:10px 12px}
-      tbody tr{border-bottom:1px solid var(--line)}
-      tbody tr:last-child{border-bottom:none}
-      .td-label{
-        display:block;
-        color:var(--muted);
-        font-size:12px;
-        margin:0 0 6px;
+  <!-- Structured data -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@graph":[
+      {
+        "@type":"WebSite",
+        "name":"calc-vilok.ru",
+        "url":"https://calc-vilok.ru/",
+        "inLanguage":"ru"
+      },
+      {
+        "@type":"WebApplication",
+        "name":"Калькулятор вилок",
+        "url":"https://calc-vilok.ru/",
+        "applicationCategory":"FinanceApplication",
+        "operatingSystem":"Any",
+        "inLanguage":"ru",
+        "description":"Калькулятор вилок: расчет ставок, распределение прибыли и ROI."
       }
-      .mini{justify-content:flex-start}
-    }
-  </style>
+    ]
+  }
+  </script>
 </head>
+
 <body>
-  <div class="wrap">
-    <h1>Онлайн-калькулятор вилок</h1>
-    <p class="sub">
-      Статический калькулятор (HTML/CSS/JS): распределение ставок по исходам, учет комиссий, фиксация ставок, округление и валюты.
-    </p>
-
-    <div class="grid">
-      <div class="card">
-        <div class="card-h">
-          <div class="title">Параметры</div>
-          <div class="seg" id="outcomesSeg" aria-label="Число исходов">
-            <button type="button" data-n="2" class="active">2</button>
-            <button type="button" data-n="3">3</button>
-            <button type="button" data-n="4">4 и больше</button>
-          </div>
-        </div>
-        <div class="card-b">
-          <div class="row">
-            <div class="field">
-              <label>Тип (формула)</label>
-              <select id="formula">
-                <option value="classic">Классика (распределение по 1/коэфф.)</option>
-                <option value="equalProfit">Равный доход (приблизительно)</option>
-              </select>
-              <div class="hint">Если не уверена - оставь "Классика".</div>
-            </div>
-
-            <div class="field">
-              <label>Сумма ставок</label>
-              <input id="totalStake" type="number" min="0" step="0.01" value="1000" />
-              <div class="hint">Банк, который распределяем по исходам.</div>
-            </div>
-
-            <div class="field">
-              <label>Валюта банка</label>
-              <select id="baseCurrency"></select>
-              <div class="hint">Конвертация работает, если включить "свои курсы".</div>
-            </div>
-
-            <div class="field">
-              <label>Округлять ставки до</label>
-              <input id="roundTo" type="number" min="0.01" step="0.01" value="0.01" />
-              <div class="hint">Например 1, 0.1, 0.01.</div>
-            </div>
-          </div>
-
-          <div class="foot">
-            <div class="switches">
-              <label class="sw">
-                <input type="checkbox" id="showCommission" checked />
-                Показывать комиссии
-              </label>
-              <label class="sw">
-                <input type="checkbox" id="useCustomRates" />
-                Использовать свои курсы валют
-              </label>
-              <label class="sw">
-                <input type="checkbox" id="roundWithRates" />
-                Учитывать курсы валют при округлении
-              </label>
-            </div>
-
-            <div class="mini">
-              <span class="tag">Индекс вилки: <strong id="arbIndex">-</strong></span>
-              <span class="tag">Доход: <strong id="profitAbs">-</strong></span>
-              <span class="tag">ROI: <strong id="profitPct">-</strong></span>
-            </div>
-          </div>
-
-          <div id="ratesBox" style="display:none; margin-top:12px;">
-            <div class="row">
-              <div class="field">
-                <label>Курс USD к базе</label>
-                <input id="rateUSD" type="number" min="0" step="0.0001" />
-              </div>
-              <div class="field">
-                <label>Курс EUR к базе</label>
-                <input id="rateEUR" type="number" min="0" step="0.0001" />
-              </div>
-              <div class="field">
-                <label>Курс GBP к базе</label>
-                <input id="rateGBP" type="number" min="0" step="0.0001" />
-              </div>
-              <div class="field">
-                <label>Курс BRL к базе</label>
-                <input id="rateBRL" type="number" min="0" step="0.0001" />
-              </div>
-            </div>
-            <div class="warn">
-              Курсы вводятся как: <b>1 единица валюты = X базовой валюты</b>.
-              Пример: база = RUB, USD = 95 значит 1 USD = 95 RUB.
-            </div>
-          </div>
+  <div class="page">
+    <header class="top">
+      <div class="brand">
+<div class="logoImg" aria-hidden="true">
+  <img src="/logo.png" alt="Логотип калькулятора вилок" width="44" height="44" loading="eager" />
+</div>
+        <div class="brandText">
+          <h1 class="h1">Калькулятор вилок онлайн</h1>
+          <div class="sub">Расчет ставок, прибыли и ROI</div>
         </div>
       </div>
+    </header>
 
-      <div class="card">
-        <div class="card-h">
-          <div class="title">Расчет</div>
-          <div class="mini">
-            <button class="btn ghost" id="resetBtn" type="button">Сброс</button>
-            <button class="btn" id="recalcBtn" type="button">Пересчитать</button>
+    <main class="card" role="main">
+      <section class="controls" aria-label="Настройки калькулятора">
+        <div class="controlRow">
+          <div class="label">Число исходов:</div>
+          <div class="segmented" id="outcomesSeg" role="tablist" aria-label="Число исходов">
+            <button class="seg is-active" data-n="2" role="tab" aria-selected="true">2</button>
+            <button class="seg" data-n="3" role="tab" aria-selected="false">3</button>
+            <button class="seg" data-n="4" role="tab" aria-selected="false">4 и больше</button>
           </div>
+          <div class="spacer"></div>
         </div>
-        <div class="card-b">
-          <table id="calcTable" aria-label="Таблица исходов">
-            <thead>
-              <tr>
-                <th style="width:64px">#</th>
-                <th>Коэффициент</th>
-                <th class="commCol">С комиссией</th>
-                <th>Комиссия, %</th>
-                <th>Фикс. ставка</th>
-                <th>Ставка</th>
-                <th>Валюта</th>
-                <th>Выплата</th>
-                <th>Доход</th>
-              </tr>
-            </thead>
-            <tbody id="tbody"></tbody>
-          </table>
+      </section>
 
-          <div class="warn" style="margin-top:12px;">
-            Пояснение: "Комиссия" применяется к прибыли (то есть к (коэфф - 1)), как обычно в калькуляторах.
-            "Фикс. ставка" - если включить, эта ставка не перераспределяется, остальной банк делится между остальными исходами.
-          </div>
+      <section class="table" aria-label="Калькулятор вилок">
+        <div class="thead" aria-hidden="true">
+          <div>Коэффициент</div>
+          <div>Ставка (RUB)</div>
+          <div class="center">Р</div>
+          <div class="center">Ф</div>
+          <div>Доход (RUB)</div>
         </div>
-      </div>
-    </div>
+
+        <div class="tbody" id="rows"></div>
+
+        <div class="tfoot">
+<div class="sumLine">
+  <div class="sumLabel">Сумма ставок:</div>
+  <div class="sumInput">
+    <input class="input" id="bank" type="number" min="0" step="0.01" value="1000" inputmode="decimal" />
+    <div class="badge"><span class="muted">RUB</span></div>
   </div>
 
-<script>
-(() => {
-  const currencies = ["RUB","USD","EUR","GBP","BRL"];
-  const defaultRatesToRUB = { RUB:1, USD:95, EUR:105, GBP:122, BRL:19 }; // пример, меняется вручную
+  <div class="sumStats">
+    <div class="pill" id="arbStatus">-</div>
+    <div class="pill" id="roiStatus">-</div>
+  </div>
+</div>
+<div class="note">
+  <span class="muted">
+    Р - исход(ы), которые забирают прибыль (у исходов без Р прибыль 0).
+    Ф - фикс ставки строки (включается вручную, автофикса нет).
+    Банк можно менять вручную всегда.
+  </span>
+</div>       </div>
+      </section>
+    </main>
 
-  const el = (id) => document.getElementById(id);
+    <!-- CTA below calculator -->
+    <section class="card" style="margin-top:14px; padding:16px;">
+      <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;">
+        <div>
+          <div style="font-weight:750; font-size:16px;">Подписывайся на Telegram</div>
+          <div class="muted" style="font-size:12px; margin-top:4px;">Обновления калькулятора, фишки и разборы.</div>
+        </div>
+        <a class="tgBtn" href="https://t.me/+BYeTMejyvuI4MTZi" target="_blank" rel="noopener noreferrer">
+          Перейти в Telegram
+        </a>
+      </div>
+    </section>
 
-  const outcomesSeg = el("outcomesSeg");
-  const tbody = el("tbody");
-  const formula = el("formula");
-  const totalStake = el("totalStake");
-  const baseCurrency = el("baseCurrency");
-  const roundTo = el("roundTo");
-  const showCommission = el("showCommission");
-  const useCustomRates = el("useCustomRates");
-  const roundWithRates = el("roundWithRates");
-  const ratesBox = el("ratesBox");
-  const rateUSD = el("rateUSD");
-  const rateEUR = el("rateEUR");
-  const rateGBP = el("rateGBP");
-  const rateBRL = el("rateBRL");
+    <footer class="foot muted">
+      <span>© <span id="year"></span> calc-vilok.ru</span>
+    </footer>
+  </div>
 
-  const arbIndex = el("arbIndex");
-  const profitAbs = el("profitAbs");
-  const profitPct = el("profitPct");
-
-  let nOutcomes = 2;
-
-  function fmt(x, digits=2){
-    if (!isFinite(x)) return "-";
-    const d = Math.max(0, Math.min(8, digits));
-    return x.toLocaleString("ru-RU", { maximumFractionDigits:d, minimumFractionDigits:d });
-  }
-
-  function getRatesToBase(){
-    const base = baseCurrency.value;
-    // rates as: 1 CUR = X BASE
-    // We'll store input as to BASE directly if custom enabled; else derive from defaultRatesToRUB via cross-rate.
-    if (useCustomRates.checked) {
-      const obj = { [base]: 1 };
-      obj.USD = parseFloat(rateUSD.value) || 0;
-      obj.EUR = parseFloat(rateEUR.value) || 0;
-      obj.GBP = parseFloat(rateGBP.value) || 0;
-      obj.BRL = parseFloat(rateBRL.value) || 0;
-      obj.RUB = (base === "RUB") ? 1 : (defaultRatesToRUB.RUB / defaultRatesToRUB[base]); // fallback
-      // ensure base is 1
-      obj[base] = 1;
-      return obj;
-    }
-    // derive from defaultRatesToRUB (1 CUR = X RUB) to base
-    const baseToRUB = defaultRatesToRUB[base] || 1;
-    const obj = {};
-    for (const c of currencies){
-      const curToRUB = defaultRatesToRUB[c] || 1;
-      // 1 CUR = (curToRUB/baseToRUB) BASE
-      obj[c] = curToRUB / baseToRUB;
-    }
-    obj[base] = 1;
-    return obj;
-  }
-
-  function buildCurrencyOptions(select, selected){
-    select.innerHTML = "";
-    for (const c of currencies){
-      const opt = document.createElement("option");
-      opt.value = c;
-      opt.textContent = c;
-      if (c === selected) opt.selected = true;
-      select.appendChild(opt);
-    }
-  }
-
-  function rowTemplate(i){
-    const tr = document.createElement("tr");
-    tr.dataset.i = String(i);
-
-    const tdIndex = document.createElement("td");
-    tdIndex.className = "cell tiny";
-    tdIndex.innerHTML = `<div class="td-label">#</div><div class="tag" style="justify-content:center;width:max-content;"><strong>${i+1}</strong></div>`;
-    tr.appendChild(tdIndex);
-
-    const tdOdd = document.createElement("td");
-    tdOdd.className = "cell";
-    tdOdd.innerHTML = `
-      <div class="td-label">Коэффициент</div>
-      <input type="number" min="1.01" max="100000" step="0.01" class="odd" value="${i===0?2.10:(i===1?1.85:(i===2?3.60:4.20))}">
-      <div class="hint err oddErr" style="display:none;color:var(--danger)">Значение должно быть числом, >1 и <100000.</div>
-    `;
-    tr.appendChild(tdOdd);
-
-    const tdOddNet = document.createElement("td");
-    tdOddNet.className = "cell commCol";
-    tdOddNet.innerHTML = `
-      <div class="td-label">С комиссией</div>
-      <input type="text" class="oddNet" value="-" disabled>
-    `;
-    tr.appendChild(tdOddNet);
-
-    const tdComm = document.createElement("td");
-    tdComm.className = "cell small";
-    tdComm.innerHTML = `
-      <div class="td-label">Комиссия, %</div>
-      <input type="number" min="-40" max="40" step="0.01" class="comm" value="0">
-      <div class="hint err commErr" style="display:none;color:var(--danger)">Значение должно быть числом, >=-40 и <=40.</div>
-    `;
-    tr.appendChild(tdComm);
-
-    const tdFix = document.createElement("td");
-    tdFix.className = "cell small";
-    tdFix.innerHTML = `
-      <div class="td-label">Фикс. ставка</div>
-      <label class="sw" style="justify-content:flex-start;margin-top:2px;">
-        <input type="checkbox" class="fixOn">
-        Зафиксировать
-      </label>
-      <input type="number" min="0" step="0.01" class="fixVal" value="" placeholder="0" style="margin-top:8px;display:none;">
-      <div class="hint err fixErr" style="display:none;color:var(--danger)">Значение должно быть числом и >=0.</div>
-    `;
-    tr.appendChild(tdFix);
-
-    const tdStake = document.createElement("td");
-    tdStake.className = "cell";
-    tdStake.innerHTML = `
-      <div class="td-label">Ставка</div>
-      <input type="text" class="stake" value="-" disabled>
-    `;
-    tr.appendChild(tdStake);
-
-    const tdCur = document.createElement("td");
-    tdCur.className = "cell small";
-    tdCur.innerHTML = `
-      <div class="td-label">Валюта</div>
-      <select class="cur"></select>
-    `;
-    tr.appendChild(tdCur);
-
-    const tdPayout = document.createElement("td");
-    tdPayout.className = "cell";
-    tdPayout.innerHTML = `
-      <div class="td-label">Выплата</div>
-      <input type="text" class="payout" value="-" disabled>
-    `;
-    tr.appendChild(tdPayout);
-
-    const tdProfit = document.createElement("td");
-    tdProfit.className = "cell";
-    tdProfit.innerHTML = `
-      <div class="td-label">Доход</div>
-      <input type="text" class="profitCell" value="-" disabled>
-    `;
-    tr.appendChild(tdProfit);
-
-    return tr;
-  }
-
-  function rebuildRows(){
-    tbody.innerHTML = "";
-    const base = baseCurrency.value || "RUB";
-    for (let i=0;i<nOutcomes;i++){
-      const tr = rowTemplate(i);
-      const curSel = tr.querySelector(".cur");
-      buildCurrencyOptions(curSel, base);
-      tbody.appendChild(tr);
-    }
-    wireRowEvents();
-    recalc();
-  }
-
-  function setOutcomes(n){
-    nOutcomes = n;
-    [...outcomesSeg.querySelectorAll("button")].forEach(b => b.classList.toggle("active", Number(b.dataset.n)===n || (n>=4 && b.dataset.n==="4")));
-    rebuildRows();
-  }
-
-  function validateNumber(val, {min=-Infinity, max=Infinity, required=true}={}){
-    const x = Number(val);
-    if (!isFinite(x)) return { ok: !required, x: NaN };
-    if (x < min || x > max) return { ok:false, x };
-    return { ok:true, x };
-  }
-
-  function getRows(){
-    return [...tbody.querySelectorAll("tr")].map(tr => {
-      const oddEl = tr.querySelector(".odd");
-      const commEl = tr.querySelector(".comm");
-      const oddNetEl = tr.querySelector(".oddNet");
-      const fixOnEl = tr.querySelector(".fixOn");
-      const fixValEl = tr.querySelector(".fixVal");
-      const curEl = tr.querySelector(".cur");
-      const stakeEl = tr.querySelector(".stake");
-      const payoutEl = tr.querySelector(".payout");
-      const profitEl = tr.querySelector(".profitCell");
-
-      return { tr, oddEl, commEl, oddNetEl, fixOnEl, fixValEl, curEl, stakeEl, payoutEl, profitEl };
-    });
-  }
-
-  function computeEffectiveOdds(odd, commPct){
-    // Комиссия на прибыль: payout = stake * (1 + (odd-1)*(1-comm))
-    const comm = commPct/100;
-    return 1 + (odd - 1) * (1 - comm);
-  }
-
-  function roundStake(value, step){
-    if (!isFinite(value) || value < 0) return value;
-    if (!isFinite(step) || step <= 0) return value;
-    return Math.round(value / step) * step;
-  }
-
-  function recalc(){
-    const rows = getRows();
-
-    // toggle commission column
-    document.querySelectorAll(".commCol").forEach(x => x.style.display = showCommission.checked ? "" : "none");
-
-    const base = baseCurrency.value;
-    const rates = getRatesToBase(); // 1 CUR = X BASE
-    const bank = Number(totalStake.value);
-    const bankOk = isFinite(bank) && bank >= 0;
-
-    // validate odds/comm/fix values
-    let okAll = bankOk;
-    const odds = [];
-    const effOdds = [];
-    const fixed = []; // in BASE
-    const currenciesPerRow = [];
-
-    for (const r of rows){
-      const oddV = validateNumber(r.oddEl.value, {min:1.0000001, max:100000, required:true});
-      const commV = validateNumber(r.commEl.value, {min:-40, max:40, required:true});
-
-      r.tr.querySelector(".oddErr").style.display = oddV.ok ? "none" : "";
-      r.tr.querySelector(".commErr").style.display = commV.ok ? "none" : "";
-
-      okAll = okAll && oddV.ok && commV.ok;
-
-      const cur = r.curEl.value || base;
-      currenciesPerRow.push(cur);
-
-      const odd = oddV.x;
-      const commPct = commV.x;
-      const eff = computeEffectiveOdds(odd, commPct);
-
-      odds.push(odd);
-      effOdds.push(eff);
-      r.oddNetEl.value = isFinite(eff) ? fmt(eff, 4) : "-";
-
-      // fix logic
-      const on = r.fixOnEl.checked;
-      let fxBase = 0;
-      if (on){
-        const fx = validateNumber(r.fixValEl.value, {min:0, max:1e18, required:true});
-        r.tr.querySelector(".fixErr").style.display = fx.ok ? "none" : "";
-        okAll = okAll && fx.ok;
-        // input assumed in row currency
-        fxBase = (fx.x || 0) * (rates[cur] || 1);
-      } else {
-        r.tr.querySelector(".fixErr").style.display = "none";
-      }
-      fixed.push(fxBase);
-    }
-
-    if (!okAll){
-      arbIndex.textContent = "-";
-      profitAbs.textContent = "-";
-      profitPct.textContent = "-";
-      // clear computed
-      for (const r of rows){
-        r.stakeEl.value = "-";
-        r.payoutEl.value = "-";
-        r.profitEl.value = "-";
-      }
-      return;
-    }
-
-    const step = Number(roundTo.value);
-    const stepOk = isFinite(step) && step > 0;
-
-    // distribute remaining bank among non-fixed outcomes
-    const fixedSum = fixed.reduce((a,b)=>a+b,0);
-    const remain = Math.max(0, bank - fixedSum);
-
-    const activeIdx = rows.map((_,i)=>i).filter(i => !rows[i].fixOnEl.checked);
-    const invSum = activeIdx.reduce((s,i)=> s + (1/effOdds[i]), 0);
-
-    let stakesBase = new Array(nOutcomes).fill(0);
-
-    // fixed stakes first
-    for (let i=0;i<nOutcomes;i++){
-      stakesBase[i] = fixed[i];
-    }
-
-    if (activeIdx.length > 0){
-      for (const i of activeIdx){
-        const part = (1/effOdds[i]) / invSum;
-        stakesBase[i] += remain * part;
-      }
-    }
-
-    // optional equalProfit tweak (approx): adjust by using effOdds but still classic baseline
-    if (formula.value === "equalProfit" && activeIdx.length > 1){
-      // one pass normalization to equalize payouts of non-fixed outcomes
-      const targetPayout = activeIdx.reduce((s,i)=> s + stakesBase[i]*effOdds[i], 0) / activeIdx.length;
-      for (const i of activeIdx){
-        stakesBase[i] = targetPayout / effOdds[i];
-      }
-      // renormalize to keep sum = remain (+ fixed already)
-      const activeSum = activeIdx.reduce((s,i)=> s + stakesBase[i], 0);
-      const scale = activeSum > 0 ? (remain / activeSum) : 1;
-      for (const i of activeIdx){
-        stakesBase[i] *= scale;
-      }
-      // fixed remain
-      for (let i=0;i<nOutcomes;i++){
-        if (rows[i].fixOnEl.checked) stakesBase[i] = fixed[i];
-      }
-    }
-
-    // rounding
-    let stakesRoundedBase = stakesBase.slice();
-    if (stepOk){
-      if (roundWithRates.checked){
-        // round in row currency, then convert back to base
-        for (let i=0;i<nOutcomes;i++){
-          const cur = currenciesPerRow[i];
-          const toBase = rates[cur] || 1;
-          const stakeCur = stakesBase[i] / toBase;
-          const stakeCurR = roundStake(stakeCur, step);
-          stakesRoundedBase[i] = stakeCurR * toBase;
-        }
-      } else {
-        // round in base directly
-        for (let i=0;i<nOutcomes;i++){
-          stakesRoundedBase[i] = roundStake(stakesBase[i], step);
-        }
-      }
-    }
-
-    const totalRoundedBase = stakesRoundedBase.reduce((a,b)=>a+b,0);
-
-    // payouts and profits (in base)
-    const payoutsBase = stakesRoundedBase.map((s,i)=> s * effOdds[i]);
-    const minPayout = Math.min(...payoutsBase);
-    const profitBase = minPayout - totalRoundedBase;
-
-    // display index (sum of inverse effective odds)
-    const idx = effOdds.reduce((s,o)=> s + (1/o), 0);
-
-    arbIndex.textContent = fmt(idx, 6);
-    profitAbs.innerHTML = `<span class="${profitBase>=0 ? "profit" : "loss"}">${fmt(profitBase, 2)} ${base}</span>`;
-    const roi = totalRoundedBase > 0 ? (profitBase/totalRoundedBase)*100 : 0;
-    profitPct.innerHTML = `<span class="${roi>=0 ? "profit" : "loss"}">${fmt(roi, 2)}%</span>`;
-
-    // per-row outputs (in row currency)
-    for (let i=0;i<nOutcomes;i++){
-      const r = rows[i];
-      const cur = currenciesPerRow[i];
-      const toBase = rates[cur] || 1;
-
-      const stakeCur = stakesRoundedBase[i] / toBase;
-      const payoutCur = payoutsBase[i] / toBase;
-      // profit shown if THIS outcome wins: payout - total stakes (converted to row cur)
-      const profitIfWinsCur = (payoutsBase[i] - totalRoundedBase) / toBase;
-
-      r.stakeEl.value = `${fmt(stakeCur, 2)} ${cur}`;
-      r.payoutEl.value = `${fmt(payoutCur, 2)} ${cur}`;
-
-      const cls = profitIfWinsCur >= 0 ? "profit" : "loss";
-      r.profitEl.value = `${fmt(profitIfWinsCur, 2)} ${cur}`;
-      r.profitEl.classList.remove("profit","loss");
-      r.profitEl.classList.add(cls);
-    }
-  }
-
-  function wireRowEvents(){
-    for (const r of getRows()){
-      // show/hide fix input
-      r.fixOnEl.addEventListener("change", () => {
-        r.fixValEl.style.display = r.fixOnEl.checked ? "" : "none";
-        recalc();
-      });
-      r.oddEl.addEventListener("input", recalc);
-      r.commEl.addEventListener("input", recalc);
-      r.fixValEl.addEventListener("input", recalc);
-      r.curEl.addEventListener("change", recalc);
-    }
-  }
-
-  // init currency selects
-  buildCurrencyOptions(baseCurrency, "RUB");
-  // init rates inputs
-  function syncRateInputs(){
-    const base = baseCurrency.value;
-    // prefill custom rates based on defaults
-    // if base is not RUB, convert defaultRatesToRUB to base
-    const baseToRUB = defaultRatesToRUB[base] || 1;
-    const toBase = (cur) => (defaultRatesToRUB[cur] || 1) / baseToRUB;
-
-    rateUSD.value = fmt(toBase("USD"), 4).replace(/\s/g,"");
-    rateEUR.value = fmt(toBase("EUR"), 4).replace(/\s/g,"");
-    rateGBP.value = fmt(toBase("GBP"), 4).replace(/\s/g,"");
-    rateBRL.value = fmt(toBase("BRL"), 4).replace(/\s/g,"");
-  }
-  syncRateInputs();
-
-  // segment buttons
-  outcomesSeg.addEventListener("click", (e) => {
-    const btn = e.target.closest("button[data-n]");
-    if (!btn) return;
-    const n = Number(btn.dataset.n);
-    setOutcomes(n === 4 ? 4 : n);
-  });
-
-  // toggles and inputs
-  el("recalcBtn").addEventListener("click", recalc);
-  el("resetBtn").addEventListener("click", () => {
-    formula.value = "classic";
-    totalStake.value = 1000;
-    roundTo.value = 0.01;
-    showCommission.checked = true;
-    useCustomRates.checked = false;
-    roundWithRates.checked = false;
-    ratesBox.style.display = "none";
-    baseCurrency.value = "RUB";
-    syncRateInputs();
-    setOutcomes(2);
-  });
-
-  showCommission.addEventListener("change", recalc);
-  totalStake.addEventListener("input", recalc);
-  roundTo.addEventListener("input", recalc);
-  formula.addEventListener("change", recalc);
-  baseCurrency.addEventListener("change", () => {
-    syncRateInputs();
-    rebuildRows();
-  });
-
-  useCustomRates.addEventListener("change", () => {
-    ratesBox.style.display = useCustomRates.checked ? "" : "none";
-    recalc();
-  });
-  roundWithRates.addEventListener("change", recalc);
-
-  for (const x of [rateUSD, rateEUR, rateGBP, rateBRL]){
-    x.addEventListener("input", recalc);
-  }
-
-  // first build
-  rebuildRows();
-})();
-</script>
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+  <script src="app.js"></script>
 </body>
 </html>
